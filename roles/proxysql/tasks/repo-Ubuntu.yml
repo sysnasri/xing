@@ -1,0 +1,17 @@
+---
+- name: Install gpg-agent
+  apt:
+    name: gpg-agent
+    update_cache: yes
+    state: present
+
+- name: Add proxysql apt key
+  apt_key:
+    url: https://repo.proxysql.com/ProxySQL/repo_pub_key
+    state: present
+
+- name: Add proxysql apt repository
+  apt_repository:
+    repo: deb https://repo.proxysql.com/ProxySQL/proxysql-2.2.x/focal/ ./
+    state: present
+    filename: proxysql

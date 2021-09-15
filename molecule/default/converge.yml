@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include assignment-devops-ansible"
+      include_role:
+        name: "assignment-devops-ansible"
+
+- import_playbook: ../../main.yml

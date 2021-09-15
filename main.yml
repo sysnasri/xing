@@ -1,0 +1,13 @@
+---
+- name: Install MySQL
+  hosts: mysql
+  roles:
+  - mysql
+- name: Install ProxySQL
+  hosts: proxysql
+  roles:
+  - proxysql
+- name: Install Webapp
+  hosts: webapp
+  roles:
+  - webapp
