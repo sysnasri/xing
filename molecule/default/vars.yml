@@ -1,28 +1,16 @@
-proxysql_login_admin_host: 127.0.0.1
-proxysql_login_admin_password: admin
-proxysql_login_admin_port: 6032
-proxysql_login_admin_user: admin
+#### Mysql Variables that are need to create Users and databases ####
+#### In Production Environment you should use Ansible Vault ####
 
-
-
-
-mysql_users:
-  -  name: webapp
-     password: 'Aa123456'
-     priv: '*.*:ALL'
-
-#mysql_users:
-#        name: webapp 
-#        host: localhost
-#        password: Aa123456
-#        priv: '*.*:ALL'
-#        state: present
 mysql_root_password_update: true
 mysql_root_username: root
 mysql_root_password: Aa123456
 webapp_root: "/etc/default/webapp"
 proxysql_hostname: proxysql_centos
 
+mysql_users:
+  -  name: webapp
+     password: 'Aa123456'
+     priv: '*.*:ALL'
 
 
 mysql_databases:
@@ -33,7 +21,15 @@ mysql_databases:
           replicate: 0
           state: present
 
+##############################################################
+#### Default Variables for testing Proxysql Initial Setup ####
 
+proxysql_login_admin_host: 127.0.0.1
+proxysql_login_admin_password: admin
+proxysql_login_admin_port: 6032
+proxysql_login_admin_user: admin
+
+##############################################################
 
 proxysql_mysql_users:
    user1:
@@ -64,8 +60,11 @@ proxysql_mysql_users:
      password: Aa123456
      transaction_persistent: 1
      username: webapp2
-
+##############################################################
+#### Set ProxySQL Version ####
 proxysql_version: 2.3.0
+
+##############################################################
 proxysql_backend_servers:
    mysql-srv1-hg1:
      comment: mysql-srv1-hg1
@@ -92,9 +91,5 @@ proxysql_backend_servers:
      status: ONLINE
      weight: 1
 
-
-mysql_users:
-  -  name: webapp
-     password: 'Aa123456'
-     priv: '*.*:ALL'
-
+### End Of Test variables ####
+##############################################################
