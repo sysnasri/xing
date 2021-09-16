@@ -1,9 +1,29 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+     mysql_root_password_update: true
+     mysql_root_username: root
+     mysql_root_password: Aa123456
   tasks:
-    - name: "Include assignment-devops-ansible"
+    - name: "Include httpd installation setup"
       include_role:
-        name: "assignment-devops-ansible"
+        name: "../../roles/webapp"
+    - name: "Include mysql installation setup"
+      include_role:
+        name: "../../roles/mysql"
+    - name: "Include proxysql installation setup"
+      include_role:
+        name: "../../roles/proxysql"      
+
+  post_tasks:
+    - name: Make sure we can connect to MySQL via Unix socket.
+      command: "mysql -u root -pAa123456 -e 'show databases;'"
+      changed_when: false
+
+    - name: Make sure we can connect to MySQL via TCP.
+      command: "mysql -u root -pAa123456 -h 127.0.0.1 -e 'show databases;'"
+      changed_when: false
+
 
 - import_playbook: ../../main.yml

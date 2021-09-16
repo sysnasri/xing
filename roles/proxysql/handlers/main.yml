@@ -1,2 +1,7 @@
 ---
-# handlers file for roles/proxysql
+
+- name: restart proxysql service
+  service:
+    enabled: "{{ proxysql_service_enabled_state | default('yes') }}"
+    name: proxysql
+    state: "{{ proxysql_service_state | default('restarted') }}"

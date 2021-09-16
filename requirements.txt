@@ -1,3 +1,5 @@
 ansible==4.1.0
+jinja2>=2.11.2
+molecule
 molecule[docker,lint]
 openshift
