@@ -5,13 +5,22 @@
       include_role:
         name: "webapp"
       when: inventory_hostname == "node1"
+      tags: 
+        - webserver
+        - webapp 
 
     - name: "Include mysql installation setup"
       include_role:
         name: "mysql"
       when: inventory_hostname == "node3" or inventory_hostname == "node4"
+      tags:
+        - mysql
+        - db 
 
     - name: "Include proxysql installation setup"
       include_role:
         name: "proxysql" 
       when: inventory_hostname == "node2"
+      tags: 
+       - proxysql
+       - router 
