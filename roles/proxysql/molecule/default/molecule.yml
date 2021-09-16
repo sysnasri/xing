@@ -1,16 +1,33 @@
----
 dependency:
   name: galaxy
 driver:
   name: docker
 platforms:
-  - name: centos
-    image: docker.io/pycontribs/centos:8
+  - name: proxysql_centos
+    image: geerlingguy/docker-centos8-ansible
+    command: /lib/systemd/systemd
     pre_build_image: true
-  - name: ubuntu
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+  - name: proxysql_ubuntu
     image: geerlingguy/docker-ubuntu2004-ansible
+    command: /lib/systemd/systemd
     pre_build_image: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+
 provisioner:
   name: ansible
+  inventory:
+    hosts:
+      all:
+        hosts:
+        children:
+          proxysql:
+            hosts:
+              proxysql_centos:
+              proxysql_ubuntu:
 verifier:
   name: ansible

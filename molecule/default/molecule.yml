@@ -4,20 +4,35 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: centos
+  - name: mysql_centos
     image: geerlingguy/docker-centos8-ansible
     command: /lib/systemd/systemd
     pre_build_image: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
-  - name: ubuntu
+  - name: mysql_ubuntu
     image: geerlingguy/docker-ubuntu2004-ansible
     command: /lib/systemd/systemd
     pre_build_image: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
+  - name: webapp_ubuntu
+    image: geerlingguy/docker-ubuntu2004-ansible
+    command: /lib/systemd/systemd
+    pre_build_image: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+  - name: proxysql_centos
+    image: geerlingguy/docker-centos8-ansible
+    command: /lib/systemd/systemd
+    pre_build_image: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+
 
 provisioner:
   name: ansible
@@ -28,15 +43,13 @@ provisioner:
         children:
           mysql:
             hosts:
-              centos:
-              ubuntu:
+              mysql_centos:
+              mysql_ubuntu:
           proxysql:
             hosts:
-              centos:
-              ubuntu:
+              proxysql_centos:
           webapp:
             hosts:
-              centos:
-              ubuntu:
+              webapp_ubuntu:
 verifier:
   name: ansible

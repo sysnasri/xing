@@ -12,19 +12,18 @@ all:
       ansible_host: 10.10.0.107
       ip: 10.10.0.107
       access_ip: 10.10.0.107
+    node4:
+      ansible_host: 10.10.0.107
+      ip: 10.10.0.107
+      access_ip: 10.10.0.107
   children:
     mysql:
       hosts:
-        node1:
-        node2:
         node3:
+        node4:
     proxysql:
       hosts:
-        node1:
         node2:
-        node3:
     webapp:
       hosts:
         node1:
-        node2:
-        node3:

@@ -1,0 +1,14 @@
+mysql_users:
+ - name: webapp
+   password: 'Aa123456'
+   priv: '*.*:ALL'
+
+#mysql_users:
+#        name: webapp 
+#        host: localhost
+#        password: Aa123456
+#        priv: '*.*:ALL'
+#        state: present
+mysql_root_password_update: true
+mysql_root_username: root
+mysql_root_password: Aa123456

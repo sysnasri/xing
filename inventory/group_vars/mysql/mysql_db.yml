@@ -1,0 +1,7 @@
+mysql_databases:
+          name: webapp_db
+          encoding: utf8
+          collation: utf8_general_ci
+          replicate: 0
+          state: present
+

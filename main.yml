@@ -1,13 +1,20 @@
 ---
 - name: Install MySQL
   hosts: mysql
+  vars: 
+    - mysql_master_docker_name: mysql_master
+    - mysql_slave_docker_name: mysql_slave
   roles:
   - mysql
 - name: Install ProxySQL
   hosts: proxysql
+  vars: 
+    - proxysql_docker_name: proxysql
   roles:
   - proxysql
 - name: Install Webapp
   hosts: webapp
+  vars: 
+    - webapp_docker_name: webapp
   roles:
   - webapp

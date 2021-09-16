@@ -9,10 +9,25 @@
     - ../../defaults/main.yml
 
   roles:
-    - role: ansible-role-httpd
+    - role: robertdebock.bootstrap
+    - role: robertdebock.epel
+    - role: robertdebock.buildtools
+    - role: robertdebock.python_pip
+    - role: robertdebock.openssl
+      openssl_items:
+        - name: apache-httpd
+          common_name: "{{ ansible_fqdn }}"
+
+    - role: webapp
       # https_ssl_enable: yes
       httpd_port: 8080
       httpd_ssl_port: 8443
+      webapp_root: /etc/default/webapp
+      proxysql_docker_name: proxysql
+      proxysql_login_admin_port: 1234
+      mysql_users:
+        name: webapp
+        password: 123456
       httpd_locations:
         - name: my_location
           location: /my_location

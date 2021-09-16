@@ -1,17 +1,17 @@
 ---
 - name: Converge
   hosts: all
-  become: yes
-  gather_facts: yes
-
+  become: true
+  vars_files: 
+    - vars.yml
   roles:
-    - role: ansible-role-mysql
-      mysql_databases:
-        - name: my_db
-          encoding: utf8
-          collation: utf8_bin
-      mysql_users:
-        - name: my_user
-          password: my_pass
-          priv: "my_db.*:ALL"
-          update_password: on_create
+    - role: mysql
+
+  post_tasks:
+    - name: Make sure we can connect to MySQL via Unix socket.
+      command: "mysql -u root -pAa123456 -e 'show databases;'"
+      changed_when: false
+
+    - name: Make sure we can connect to MySQL via TCP.
+      command: "mysql -u root -pAa123456 -h 127.0.0.1 -e 'show databases;'"
+      changed_when: false

@@ -66,6 +66,11 @@
   when:
     - httpd_vhosts is defined
 
+- name: import env.yml
+  ansible.builtin.import_tasks: env.yml
+  when:
+    - webapp_root is defined
+
 - name: configure ports
   ansible.builtin.template:
     src: "{{ httpd_ports_conf }}.j2"

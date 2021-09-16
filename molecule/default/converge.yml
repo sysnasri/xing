@@ -1,29 +1,34 @@
 ---
 - name: Converge
   hosts: all
-  vars:
-     mysql_root_password_update: true
-     mysql_root_username: root
-     mysql_root_password: Aa123456
+  vars_files:
+    - vars.yml
   tasks:
     - name: "Include httpd installation setup"
       include_role:
-        name: "../../roles/webapp"
+        name: "webapp"
+      when: inventory_hostname == "webapp_ubuntu"
+
     - name: "Include mysql installation setup"
       include_role:
-        name: "../../roles/mysql"
+        name: "mysql"
+      when: inventory_hostname == "mysql_centos" or inventory_hostname == "mysql_ubuntu"
+
     - name: "Include proxysql installation setup"
       include_role:
-        name: "../../roles/proxysql"      
+        name: "proxysql" 
+      when: inventory_hostname == "proxysql_centos"
 
   post_tasks:
     - name: Make sure we can connect to MySQL via Unix socket.
       command: "mysql -u root -pAa123456 -e 'show databases;'"
       changed_when: false
+      when: inventory_hostname == "mysql_centos" or inventory_hostname == "mysql_ubuntu"
 
     - name: Make sure we can connect to MySQL via TCP.
       command: "mysql -u root -pAa123456 -h 127.0.0.1 -e 'show databases;'"
       changed_when: false
+      when: inventory_hostname == "mysql_centos" and inventory_hostname == "mysql_ubuntu"
 
 
-- import_playbook: ../../main.yml
+#- import_playbook: ../../main.yml
