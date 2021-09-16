@@ -1,5 +1,6 @@
 - name: Setup cluster
   hosts: all
+  gather_facts: no
   tasks:
     - name: "Include httpd installation setup"
       include_role:
