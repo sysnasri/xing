@@ -1,27 +1,61 @@
-- name: Setup cluster
-  hosts: all
-  gather_facts: no
+
+- name: Setup httpd webserver
+  hosts: webapp
+  gather_facts: yes
+  become: yes
   tasks:
     - name: "Include httpd installation setup"
       include_role:
         name: "webapp"
-      when: inventory_hostname == "node1"
-      tags: 
+      tags:
         - webserver
-        - webapp 
-
+        - webapp
+- name: Setup mysql cluster
+  hosts: mysql
+  gather_facts: yes
+  become: yes
+  tasks:
     - name: "Include mysql installation setup"
       include_role:
         name: "mysql"
-      when: inventory_hostname == "node3" or inventory_hostname == "node4"
       tags:
         - mysql
-        - db 
-
+        - db
+- name: Setup proxysql cluster
+  hosts: proxysql
+  gather_facts: yes
+  become: yes
+  tasks:
     - name: "Include proxysql installation setup"
       include_role:
-        name: "proxysql" 
-      when: inventory_hostname == "node2"
-      tags: 
-       - proxysql
-       - router 
+        name: "proxysql"
+      tags:
+        - proxysql
+        - router
+# - name: Setup cluster
+#   hosts: all
+#   gather_facts: no
+#   tasks:
+#     - name: "Include httpd installation setup"
+#       include_role:
+#         name: "webapp"
+#       when: inventory_hostname == "node1"
+#       tags:
+#         - webserver
+#         - webapp
+
+#     - name: "Include mysql installation setup"
+#       include_role:
+#         name: "mysql"
+#       when: inventory_hostname == "node3" or inventory_hostname == "node4"
+#       tags:
+#         - mysql
+#         - db
+
+#     - name: "Include proxysql installation setup"
+#       include_role:
+#         name: "proxysql"
+#       when: inventory_hostname == "node2"
+#       tags:
+#        - proxysql
+#        - router

@@ -1,0 +1,2 @@
+webapproot: "/etc/default/webapp"
+httpd_servername: aws.nasri.it
